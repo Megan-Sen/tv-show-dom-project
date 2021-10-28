@@ -34,7 +34,8 @@ function makePageForEpisodes(episodeList) {
 }
 
 function createCard(episode) {
-  let card = document.createElement("span");
+  let card = document.createElement("div");
+  card.setAttribute("id", episode.id);
   rootElem.appendChild(card);
   card.className = "card-item";
   let cardTitle = document.createElement("h2");
@@ -62,7 +63,7 @@ function createEpisodeSelector(arr) {
     option.text =
       "S" + arr[i].season + "E" + arr[i].number + " - " + arr[i].name;
     select.appendChild(option);
-    option.setAttribute("value", i);
+    option.setAttribute("value", arr[i].id);
     select.onchange = handleChosenEpisode;
   }
 }
@@ -73,7 +74,7 @@ function handleChosenEpisode(event) {
    return;
   }
   let id = opts[0].value;
-  document.location.assign(`#${id}`);//????//
+  document.location.assign(`#${id}`);
   console.log("yes");
 }
 
