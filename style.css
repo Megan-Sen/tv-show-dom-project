@@ -1,3 +1,12 @@
-#root {
-  color: red;
+#root{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.card-item{
+  width:15rem;
+  padding:1rem;
+  margin:1rem;
+  background-color: darkseagreen;
 }
