@@ -2,18 +2,35 @@
 const rootElem = document.getElementById("root");
 const searchEpisodesBox = document.querySelector("#searchEpisode");
 const select = document.getElementById("select");
-
+const allEpisodes = [];
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-
-  searchEpisodesBox.addEventListener("keyup", searchEpisodes);
-
-  createEpisodeSelector(allEpisodes);
+  // const allEpisodes = getAllEpisodes();
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((response) => {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json();
+      } else {
+        throw new Error(
+          `Encountered something unexpected: ${response.status} ${response.statusText}`
+        );
+      }
+    })
+    .then((data) => {
+      // do whatever you want with the JSON response 
+      // debugger;
+      // data.forEach((episode)=>allEpisodes.push(episode));
+      allEpisodes.push(...data);
+      makePageForEpisodes(allEpisodes);
+      searchEpisodesBox.addEventListener("keyup", searchEpisodes);
+      createEpisodeSelector(allEpisodes);
+    })
+    .catch((error) => {
+      // Handle the error
+      console.log(error);
+    });
 }
 
 function searchEpisodes() {
-  const allEpisodes = getAllEpisodes();
   let filteredEpisodes = allEpisodes.filter(filterEpisodes);
   makePageForEpisodes(filteredEpisodes);
 }
